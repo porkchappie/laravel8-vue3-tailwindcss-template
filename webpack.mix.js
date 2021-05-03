@@ -2,22 +2,6 @@ const mix = require('laravel-mix');
 const path = require("path");
 const webpack = require('webpack')
 
-mix.webpackConfig({
-    resolve: {
-        alias: {
-            CSS: path.resolve(__dirname, './resources/css'),
-            JS: path.resolve(__dirname, './resources/js'),
-            Vue: path.resolve(__dirname, './resources/js/vue'),
-        }
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            __VUE_OPTIONS_API__: false,
-            __VUE_PROD_DEVTOOLS__: false,
-        }),
-    ],
-});
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -32,4 +16,19 @@ mix.webpackConfig({
 mix.js('resources/js/app.js', 'public/js').vue()
     .postCss('resources/css/app.css', 'public/css', [
         require("tailwindcss"),
-    ]);
+    ])
+    .webpackConfig({
+        resolve: {
+            alias: {
+                CSS: path.resolve(__dirname, 'resources/css'),
+                JS: path.resolve(__dirname, 'resources/js'),
+                Vue: path.resolve(__dirname, 'resources/js/vue'),
+            }
+        },
+        plugins: [
+            new webpack.DefinePlugin({
+                __VUE_OPTIONS_API__: false,
+                __VUE_PROD_DEVTOOLS__: false,
+            }),
+        ],
+    });
